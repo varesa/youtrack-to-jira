@@ -78,6 +78,7 @@ class Youtrack:
         issues = []
         root = ET.fromstring(xml)
         for issue in root.findall('issue'):
+            print('.', end="")
             id       = issue.attrib['id']
             d        = get_issue_fields(issue)
             links    = get_issue_links(issue)
@@ -90,11 +91,16 @@ class Youtrack:
                 .set_comments(comments)\
                 .set_work(work)
             issues.append(issue)
+            if str(issue) == "{}":
+                raise Exception()
         return issues
 
     def parse_project(self, xml):
         attribs = ET.fromstring(xml).attrib
         project = Project().from_dict(attribs)
+        # DEV
+        if project.id != "ALRK": return project
+        # /DEV
         r = requests.get(self.url + "/rest/issue/byproject/{}?max=10000".format(project.id), headers=self.headers)
         if r.status_code == 200:
             project.issues = self.parse_issues(r.text)
@@ -106,15 +112,18 @@ class Youtrack:
         projects = []
         projects_root = ET.fromstring(xml)
         for project in projects_root.findall('project'):
+            print("Getting project", end="")
             url = project.attrib['url']
             r = requests.get(url, headers=self.headers)
             if r.status_code == 200:
                 projects.append(self.parse_project(r.text))
             else:
                 raise Exception("Error getting project details: {}".format(r.status_code))
+            print("")
         return projects
 
     def get_projects(self):
+        print("Getting project list")
         r = requests.get(self.url + "/rest/admin/project", headers=self.headers)
         if r.status_code == 200:
             return self.parse_projects(r.text)
