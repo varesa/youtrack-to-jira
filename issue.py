@@ -16,7 +16,7 @@ class Issue:
 
     def from_dict(self, d):
         for key in d.keys():
-            self.__dict__[key] = d[key]
+            self.__dict__[key.replace(' ', '')] = d[key]
         return self
 
     def set_links(self, links):

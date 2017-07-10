@@ -24,15 +24,18 @@ def increment(d, key):
     else:
         d[key] += 1
 
+project_key = "ALRK"
+
 for project in projects:
+    if project.id != project_key:
+        continue
     if jira.does_project_exist(project.id):
         print("Project found in JIRA: " + project.id)
-        if project.id != "ALRK":
-            continue
         jira.sync_project(project)
+        print(project.__dict__)
+        sys.exit(0)
 
-    else:
-        print("Project not found in JIRA: " + project.id)
+print("Project not found")
 
 """if True:
     for project in projects:

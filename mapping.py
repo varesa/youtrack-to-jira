@@ -2,18 +2,6 @@
 Map Youtrack field values > Jira field values
 """
 
-"""
-Issue type
-Bug			        -> Bug
-Cosmetics		    -> Improvement
-Exception		    -> Bug
-Feature			    -> New Feature
-Task			    -> Task
-Usability Problem	-> Bug
-Performance Problem	-> Bug
-Epic			    -> Epic
-"""
-
 issue_type_map = {
     "Bug": "Bug",
     "Cosmetics": "Improvement",
@@ -31,17 +19,6 @@ def map_issue_type(type):
     else:
         raise Exception("Unknown issue type {}, check mapping.py".format(type))
 
-
-"""
-Priority
-low			    -> Low
-high			-> High
-Minor			-> Low
-Normal			-> Medium
-Major			-> High
-Critical		-> Highest
-Show-stopper	-> Highest
-"""
 
 issue_priority_map = {
     "low": "Low",
@@ -62,23 +39,6 @@ def map_issue_priority(priority):
         raise Exception("Unknown issue priority {}, check mapping.py".format(priority))
 
 
-"""
-State
-Submitted		-> Submitted
-Open			-> Submitted
-To be discussed	-> Submitted
-Reopened		-> Submitted
-Incomplete		-> Submitted
-In Progress		-> In Progress
-Billed			-> Billed
-Fixed			-> Fixed
-Won't Fix		-> Closed
-Obsolete		-> Closed
-Verified		-> Closed
-Can't Reproduce	-> Closed
-Duplicate		-> Closed
-"""
-
 issue_state_map = {
     "Submitted": "Submitted",
     "Open": "Submitted",
@@ -87,6 +47,7 @@ issue_state_map = {
     "Incomplete": "Submitted",
     "In Progress": "In Progress",
     "Fixed": "Fixed",
+    "Billed": "Billed",
     "Won't Fix": "Closed",
     "Obsolete": "Closed",
     "Verified": "Closed",
@@ -100,3 +61,22 @@ def map_issue_state(state):
         return issue_state_map[state]
     else:
         raise Exception("Unknown issue state {}, check mapping.py".format(state))
+
+
+# (Link name, Reverse)
+issue_link_map = {
+    "is required for": ("Blocks", False),
+    "depends on": ("Blocks", True),
+    "is duplicated by": ("Duplicate", False),
+    "duplicates": ("Duplicate", True),
+    "relates to": ("Relates", False),
+    "parent for": ("Relates", False),
+    "subtask of": ("Relates", False)
+}
+
+
+def map_issue_link(link):
+    if link in issue_link_map.keys():
+        return issue_link_map[link]
+    else:
+        raise Exception("Unknown issue link {}, check mapping.py".format(link))
