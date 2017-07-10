@@ -1,7 +1,6 @@
 import base64
 import datetime
 import requests
-import sys
 
 import config
 from jirameta import populate_meta
@@ -163,7 +162,6 @@ class Jira:
 
     def sync_project(self, project):
         populate_meta(self, project)
-        # issue = project.issues[0]
 
         for issue in project.issues:
             self.create_issue(project, issue)
