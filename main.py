@@ -1,16 +1,23 @@
 import sys
 
+from config import Config, ConfigOption
 from jira import Jira
 from youtrack import Youtrack
 
+config = Config((
+    ConfigOption("USERNAME", "--username"),
+    ConfigOption("PASSWORD", "--password"),
+    ConfigOption("PROJECT", "--project"),
+    ConfigOption("YOUTRACK_URL", "--youtrack"),
+    ConfigOption("JIRA_URL", "--jira"),
+)).get()
 
-username = input("Username: ")
-password = input("Password: ")
+username = config["USERNAME"]
+password = config["PASSWORD"]
+project_key = config["PROJECT"]
 
-youtrack = Youtrack().connect(username, password)
-jira = Jira().connect(username, password)
-
-project_key = "MBT"
+youtrack = Youtrack(config["YOUTRACK_URL"]).connect(username, password)
+jira = Jira(config["JIRA_URL"]).connect(username, password)
 
 projects = youtrack.get_projects(limit=project_key)
 

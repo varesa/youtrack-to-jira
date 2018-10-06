@@ -2,7 +2,6 @@ import base64
 import datetime
 import requests
 
-import config
 from jirameta import populate_meta
 from mapping import map_issue_type, map_issue_priority, map_issue_state, map_issue_link
 
@@ -16,8 +15,8 @@ class Jira:
 
     issue_map = {}
 
-    def __init__(self):
-        self.url = config.JIRA_URL
+    def __init__(self, url):
+        self.url = url
 
     def connect(self, user, password):
         self.headers = {'Authorization': "Basic " + base64.b64encode((user + ":" + password).encode()).decode()}

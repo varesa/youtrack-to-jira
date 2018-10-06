@@ -1,7 +1,6 @@
 import requests
 import xml.etree.ElementTree as ET
 
-import config
 from issue import Issue
 from project import Project
 
@@ -43,8 +42,8 @@ class Youtrack:
     url = ""
     headers = {}
 
-    def __init__(self):
-        self.url = config.YOUTRACK_URL
+    def __init__(self, url):
+        self.url = url
 
     def connect(self, user, password):
         r = requests.post(self.url + "/rest/user/login", {'login': user, 'password': password})
