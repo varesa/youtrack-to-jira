@@ -46,8 +46,9 @@ issue_state_map = {
     "Reopened": "Submitted",
     "Incomplete": "Submitted",
     "In Progress": "In Progress",
-    "Fixed": "Fixed",
-    "Billed": "Billed",
+    "Fixed": "Billing",
+    "Billed": "Closed",
+    "Won't fix": "Closed",
     "Won't Fix": "Closed",
     "Obsolete": "Closed",
     "Verified": "Closed",
@@ -69,9 +70,9 @@ issue_link_map = {
     "depends on": ("Blocks", True),
     "is duplicated by": ("Duplicate", False),
     "duplicates": ("Duplicate", True),
-    "relates to": ("Relates", False),
-    "parent for": ("Relates", False),
-    "subtask of": ("Relates", False)
+    "relates to": ("See also", False),
+    "parent for": ("See also", False),
+    "subtask of": ("See also", False)
 }
 
 
